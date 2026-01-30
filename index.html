@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonutWager - Elite Virtual Stakes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ec4899;
+            --neon-purple: #8b5cf6;
+            --neon-blue: #3b82f6;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Darker base for better contrast */
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; 
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* VIBRANT MESH GRADIENT BACKGROUND */
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-color: #020617;
+            overflow: hidden;
+        }
+
+        /* Animated Mesh Points */
+        .mesh-point {
+            position: absolute;
+            width: 100vmax;
+            height: 100vmax;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        .point-1 {
+            background: radial-gradient(circle, var(--neon-pink) 0%, transparent 60%);
+            top: -50%; left: -50%;
+            animation: move-1 25s infinite alternate ease-in-out;
+        }
+
+        .point-2 {
+            background: radial-gradient(circle, var(--neon-purple) 0%, transparent 60%);
+            bottom: -50%; right: -50%;
+            animation: move-2 30s infinite alternate ease-in-out;
+        }
+
+        .point-3 {
+            background: radial-gradient(circle, var(--neon-blue) 0%, transparent 60%);
+            top: 50%; left: 50%;
+            animation: move-3 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30%, 20%) scale(1.2); }
+        }
+
+        @keyframes move-2 {
+            0% { transform: translate(0, 0) scale(1.2); }
+            100% { transform: translate(-40%, -10%) scale(1); }
+        }
+
+        @keyframes move-3 {
+            0% { transform: translate(-20%, -30%) scale(1); }
+            100% { transform: translate(20%, 30%) scale(1.3); }
+        }
+
+        /* Subtle scanline overlay to give it texture */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* ENTRY ANIMATIONS */
+        .animate-in { animation-duration: 800ms; animation-fill-mode: forwards; }
+        .fade-in { animation-name: fadeIn; }
+        .slide-up { animation-name: slideUp; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* SUBTLE FLOATING ANIMATION FOR CARDS */
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* SHIMMER EFFECT */
+        .animate-shimmer {
+            animation: shimmer 3s infinite;
+        }
+
+        .animate-shimmer-slow {
+            animation: shimmer 4s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* PROGRESS BAR ANIMATION */
+        .animate-progress {
+            animation: progress 2s ease-out;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* SUBTLE BOUNCE FOR ICONS */
+        .animate-bounce-subtle {
+            animation: bounce-subtle 3s ease-in-out infinite;
+        }
+        
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-4px) scale(1.02); }
+        }
+
+        /* PULSE GLOW EFFECT */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(236, 72, 153, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.4); }
+        }
+
+        /* GRADIENT TEXT ANIMATION */
+        .animate-gradient {
+            animation: gradient 8s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* SLOW PULSE FOR DECORATIVE ELEMENTS */
+        .animate-pulse-slow {
+            animation: pulse-slow 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(236, 72, 153, 0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(236, 72, 153, 0.5); }
+
+        /* SNOWFALL ANIMATION */
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.9;
+            }
+            25% {
+                transform: translateY(25vh) translateX(calc(var(--drift, 20px) * 0.5)) rotate(90deg);
+                opacity: 0.85;
+            }
+            50% {
+                transform: translateY(50vh) translateX(var(--drift, 20px)) rotate(180deg);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translateY(75vh) translateX(calc(var(--drift, 20px) * 0.5)) rotate(270deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(110vh) translateX(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .snowfall {
+            color: white;
+            text-shadow: 0 0 6px rgba(255,255,255,0.5);
+            animation-name: snowfall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        /* TICKER SCROLL ANIMATION */
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.333%); }
+        }
+        .ticker-scroll {
+            display: flex;
+            gap: 1.5rem;
+            animation: ticker-scroll 35s linear infinite;
+            width: max-content;
+        }
+
+        /* BOUNCE SLOW FOR DONUT */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        /* GRADIENT X FOR BUTTON */
+        @keyframes gradient-x {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-x {
+            animation: gradient-x 3s ease infinite;
+        }
+
+        /* GRID WHITE PULSE ANIMATION */
+        @keyframes grid-pulse-white {
+            0%, 100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        .grid-pulse-white {
+            animation: grid-pulse-white 4s ease-in-out infinite;
+        }
+
+        /* STAT GLOW BREATHING EFFECT */
+        @keyframes stat-glow-breathing {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.3),
+                    0 0 20px rgba(255, 255, 255, 0.2),
+                    0 0 30px rgba(255, 255, 255, 0.1);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(255, 255, 255, 0.6),
+                    0 0 40px rgba(255, 255, 255, 0.4),
+                    0 0 60px rgba(255, 255, 255, 0.3);
+                transform: scale(1.02);
+            }
+        }
+        .stat-glow-breathing {
+            animation: stat-glow-breathing 3s ease-in-out infinite;
+        }
+
+        /* BREATHING FLOATING EFFECT */
+        @keyframes breathing {
+            0%, 100% { 
+                transform: translateY(0) scale(1);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: translateY(-8px) scale(1.02);
+                filter: brightness(1.1);
+            }
+        }
+        .breathing-text {
+            animation: breathing 4s ease-in-out infinite;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div class="bg-container">
+        <div class="mesh-point point-1"></div>
+        <div class="mesh-point point-2"></div>
+        <div class="mesh-point point-3"></div>
+    </div>
+    <div class="bg-overlay"></div>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

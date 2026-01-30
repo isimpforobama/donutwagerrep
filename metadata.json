@@ -1,0 +1,8 @@
+{
+  "name": "DonutGamble - Premium Virtual Casino",
+  "description": "A vibrant, virtual-only gambling platform featuring classic games like Baccarat, Coin Flip, and Towers, reimagined with smooth animations and high-fidelity visuals.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
